@@ -21,37 +21,37 @@ const BACKUP_LEVEL_CONFIGS: { [key: number]: BackupConfig } = {
   0: { // backup1.jpg
     base64: "", theme: "ด่านที่ 1: สวนแห่งความลับ", story: "ในสวนแห่งนี้มีของวิเศษซ่อนอยู่ 4 อย่าง ลองหาดูสิ",
     hiddenObjects: [
-      { id: 'b1_1', name: 'ดอกกุหลาบ', hint: 'ราชินีแห่งดอกไม้', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b1_2', name: 'ช็อกโกแลต', hint: 'ของหวานยอดนิยม', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b1_3', name: 'การ์ด', hint: 'ส่งความในใจ', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b1_4', name: 'ตุ๊กตาหมี', hint: 'เพื่อนขนนุ่ม', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
+      { id: 'b1_1', name: 'ดอกกุหลาบ / Rose', hint: 'ราชินีแห่งดอกไม้', box: { ymin: 280, xmin: 429, ymax: 467, xmax: 725 } },
+      { id: 'b1_2', name: 'ช็อกโกแลต / Chocolate', hint: 'ของหวานยอดนิยม', box: { ymin: 698, xmin: 769, ymax: 762, xmax: 849 } },
+      { id: 'b1_3', name: 'การ์ด / Card', hint: 'ส่งความในใจ', box: { ymin: 732, xmin: 138, ymax: 921, xmax: 489 } },
+      { id: 'b1_4', name: 'ตุ๊กตาหมี / Teddy Bear', hint: 'เพื่อนขนนุ่ม', box: { ymin: 317, xmin: 30, ymax: 757, xmax: 491 } },
     ]
   },
   1: { // backup2.jpg
     base64: "", theme: "ด่านที่ 2: ห้องนั่งเล่นแสนสุข", story: "มีของเล่นหายไป 4 ชิ้น ช่วยตามหาหน่อยนะ",
     hiddenObjects: [
-      { id: 'b2_1', name: 'นก', hint: 'สัตว์ปีกตัวน้อย', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b2_2', name: 'กางเขน', hint: 'สัญลักษณ์รูปกากบาท', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b2_3', name: 'กระโปรง', hint: 'เครื่องแต่งกาย', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b2_4', name: 'ผู้ชาย', hint: 'บุคคลในภาพ', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
+      { id: 'b2_1', name: 'นก / Bird', hint: 'สัตว์ปีกตัวน้อย', box: { ymin: 234, xmin: 198, ymax: 308, xmax: 291 } },
+      { id: 'b2_2', name: 'ไม้กางเขน / Cross', hint: 'สัญลักษณ์รูปกากบาท', box: { ymin: 388, xmin: 738, ymax: 452, xmax: 794 } },
+      { id: 'b2_3', name: 'กระโปรง / Skirt', hint: 'เครื่องแต่งกาย', box: { ymin: 585, xmin: 329, ymax: 885, xmax: 589 } },
+      { id: 'b2_4', name: 'ผู้ชาย / Man', hint: 'บุคคลในภาพ', box: { ymin: 334, xmin: 144, ymax: 563, xmax: 319 } },
     ]
   },
   2: { // backup3.jpg
     base64: "", theme: "ด่านที่ 3: ปาร์ตี้วันเกิด", story: "ขนมและของขวัญกระจายไปทั่วงาน ช่วยเก็บหน่อย",
     hiddenObjects: [
-      { id: 'b3_1', name: 'พระจันทร์', hint: 'ส่องสว่างบนฟ้า', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b3_2', name: 'คิวปิด', hint: 'กามเทพตัวน้อย', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b3_3', name: 'ต้นไม้', hint: 'ให้ร่มเงา', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b3_4', name: 'ลูกศร', hint: 'อาวุธของกามเทพ', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
+      { id: 'b3_1', name: 'พระจันทร์ / Moon', hint: 'ส่องสว่างบนฟ้า', box: { ymin: 40, xmin: 496, ymax: 176, xmax: 667 } },
+      { id: 'b3_2', name: 'คัมภีร์ / Scroll', hint: 'บันทึกโบราณ', box: { ymin: 657, xmin: 33, ymax: 729, xmax: 210 } },
+      { id: 'b3_3', name: 'ต้นไม้ / Tree', hint: 'ให้ร่มเงา', box: { ymin: 409, xmin: 598, ymax: 551, xmax: 687 } },
+      { id: 'b3_4', name: 'ลูกศร / Arrow', hint: 'อาวุธ', box: { ymin: 213, xmin: 202, ymax: 306, xmax: 312 } },
     ]
   },
   3: { // backup4.jpg
     base64: "", theme: "ด่านที่ 4: ชายหาดหรรษา", story: "ของเล่นชายหาดหายไปไหนหมดนะ?",
     hiddenObjects: [
-      { id: 'b4_1', name: 'สุนัข', hint: 'เพื่อนซี้สี่ขา', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b4_2', name: 'นาฬิกา', hint: 'บอกเวลา', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b4_3', name: 'ของขวัญ', hint: 'กล่องปริศนา', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
-      { id: 'b4_4', name: 'เครื่องเขียน', hint: 'อุปกรณ์การเรียน', box: { ymin: 0, xmin: 0, ymax: 0, xmax: 0 } },
+      { id: 'b4_1', name: 'สุนัข / Dog', hint: 'เพื่อนซี้สี่ขา', box: { ymin: 446, xmin: 489, ymax: 572, xmax: 642 } },
+      { id: 'b4_2', name: 'นาฬิกา / Clock', hint: 'บอกเวลา', box: { ymin: 23, xmin: 446, ymax: 102, xmax: 550 } },
+      { id: 'b4_3', name: 'ของขวัญ / Gift', hint: 'กล่องปริศนา', box: { ymin: 648, xmin: 630, ymax: 735, xmax: 724 } },
+      { id: 'b4_4', name: 'เครื่องเขียน / Stationery', hint: 'อุปกรณ์การเรียน', box: { ymin: 262, xmin: 54, ymax: 332, xmax: 109 } },
     ]
   }
 };
