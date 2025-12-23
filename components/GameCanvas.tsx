@@ -16,7 +16,7 @@ interface GameCanvasProps {
   onObjectFound: (id: string) => void;
   foundItemIds: Set<string>;
   zoom: number;
-  isDevMode?: boolean; 
+  isDevMode?: boolean;
 }
 
 export interface GameCanvasHandle {
@@ -52,36 +52,36 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [history, setHistory] = useState<ImageData[]>([]);
-  
-  const [dimensions, setDimensions] = useState<{width: number, height: number} | null>(null);
-  const [lineArtData, setLineArtData] = useState<{data: Uint8ClampedArray, width: number, height: number} | null>(null);
+
+  const [dimensions, setDimensions] = useState<{ width: number, height: number } | null>(null);
+  const [lineArtData, setLineArtData] = useState<{ data: Uint8ClampedArray, width: number, height: number } | null>(null);
 
   const isDrawing = useRef(false);
   const hasMoved = useRef(false);
-  const lastPos = useRef<{x: number, y: number} | null>(null);
+  const lastPos = useRef<{ x: number, y: number } | null>(null);
 
-  const devDragStart = useRef<{x: number, y: number} | null>(null);
-  const [devCursorPos, setDevCursorPos] = useState<{x: number, y: number} | null>(null);
+  const devDragStart = useRef<{ x: number, y: number } | null>(null);
+  const [devCursorPos, setDevCursorPos] = useState<{ x: number, y: number } | null>(null);
 
   const [textElements, setTextElements] = useState<TextElement[]>([]);
   const [selectedTextId, setSelectedTextId] = useState<number | null>(null);
   const draggingTextId = useRef<number | null>(null);
-  const dragOffset = useRef<{x: number, y: number}>({ x: 0, y: 0 });
+  const dragOffset = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
 
   useImperativeHandle(ref, () => ({
     addText: (initialText: string) => {
       if (!dimensions) return;
-      
+
       const newId = Date.now();
       const newText: TextElement = {
         id: newId,
         x: dimensions.width / 2 - 50,
         y: dimensions.height / 2,
-        text: "", 
+        text: "",
         color: brushColor,
         fontSize: fontSize
       };
-      
+
       setTextElements(prev => [...prev, newText]);
       setSelectedTextId(newId);
     },
@@ -91,7 +91,7 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
         console.error("Missing dimensions or image data for download");
         return;
       }
-      
+
       const tempCanvas = document.createElement('canvas');
       tempCanvas.width = dimensions.width;
       tempCanvas.height = dimensions.height;
@@ -105,25 +105,25 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
         ctx.globalCompositeOperation = 'multiply';
         ctx.drawImage(canvasRef.current!, 0, 0);
         ctx.restore();
-        
+
         textElements.forEach(el => {
-           if (!el.text.trim()) return;
-           ctx.font = `bold ${el.fontSize}px 'Kanit', sans-serif`;
-           ctx.fillStyle = el.color;
-           ctx.textBaseline = 'top';
-           ctx.fillText(el.text, el.x, el.y);
+          if (!el.text.trim()) return;
+          ctx.font = `bold ${el.fontSize}px 'Kanit', sans-serif`;
+          ctx.fillStyle = el.color;
+          ctx.textBaseline = 'top';
+          ctx.fillText(el.text, el.x, el.y);
         });
 
         if (userName) {
-           ctx.save();
-           ctx.font = "bold 24px 'Kanit', sans-serif";
-           ctx.fillStyle = "rgba(233, 30, 99, 0.8)"; 
-           const textStr = `ศิลปิน: ${userName} | Valentine's Art & Seek`;
-           const textWidth = ctx.measureText(textStr).width;
-           ctx.fillRect(dimensions.width - textWidth - 20, dimensions.height - 40, textWidth + 20, 40);
-           ctx.fillStyle = "white";
-           ctx.fillText(textStr, dimensions.width - textWidth - 10, dimensions.height - 32);
-           ctx.restore();
+          ctx.save();
+          ctx.font = "bold 24px 'Kanit', sans-serif";
+          ctx.fillStyle = "rgba(233, 30, 99, 0.8)";
+          const textStr = `ศิลปิน: ${userName} | Valentine's Art & Seek`;
+          const textWidth = ctx.measureText(textStr).width;
+          ctx.fillRect(dimensions.width - textWidth - 20, dimensions.height - 40, textWidth + 20, 40);
+          ctx.fillStyle = "white";
+          ctx.fillText(textStr, dimensions.width - textWidth - 10, dimensions.height - 32);
+          ctx.restore();
         }
 
         const link = document.createElement('a');
@@ -153,14 +153,14 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
     setDimensions(null);
     const canvas = canvasRef.current;
     if (canvas) {
-       const ctx = canvas.getContext('2d');
-       if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const ctx = canvas.getContext('2d');
+      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     if (!rasterImage || !containerRef.current) return;
 
     const img = new Image();
-    
+
     img.onload = () => {
       const container = containerRef.current;
       if (!container) return;
@@ -207,7 +207,7 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
   useEffect(() => {
     if (history.length > 0) {
       const newHistory = [...history];
-      newHistory.pop(); 
+      newHistory.pop();
       const previousState = newHistory.pop();
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext('2d');
@@ -250,22 +250,23 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
     const { x, y } = getPointerPos(e);
     if (isDevMode) {
+      (e.target as HTMLElement).setPointerCapture(e.pointerId); // Capture pointer for smooth dragging
       devDragStart.current = { x, y };
       return;
     }
     isDrawing.current = true;
     hasMoved.current = false;
     lastPos.current = { x, y };
-    if (phase === GamePhase.COLORING) saveState(); 
+    if (phase === GamePhase.COLORING) saveState();
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
     if (isDevMode) {
       const { x, y } = getPointerPos(e);
       if (canvasRef.current) {
-        setDevCursorPos({ 
-          x: Math.floor((x / canvasRef.current.width) * 1000), 
-          y: Math.floor((y / canvasRef.current.height) * 1000) 
+        setDevCursorPos({
+          x: Math.floor((x / canvasRef.current.width) * 1000),
+          y: Math.floor((y / canvasRef.current.height) * 1000)
         });
       }
       return;
@@ -273,7 +274,7 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
     if (toolMode === 'text' || !isDrawing.current) return;
     const { x, y } = getPointerPos(e);
     if (lastPos.current) {
-      if (Math.hypot(x - lastPos.current.x, y - lastPos.current.y) > 3) hasMoved.current = true; 
+      if (Math.hypot(x - lastPos.current.x, y - lastPos.current.y) > 3) hasMoved.current = true;
     }
     if (phase === GamePhase.COLORING && hasMoved.current) {
       const ctx = canvasRef.current?.getContext('2d');
@@ -295,10 +296,18 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
     (e.target as HTMLElement).releasePointerCapture(e.pointerId);
     const { x, y } = getPointerPos(e);
     if (isDevMode && devDragStart.current && canvasRef.current) {
+      (e.target as HTMLElement).releasePointerCapture(e.pointerId);
       const start = devDragStart.current;
       const w = canvasRef.current.width, h = canvasRef.current.height;
-      window.prompt("Copy พิกัดนี้:", `box: { ymin: ${Math.floor((Math.min(start.y, y) / h) * 1000)}, xmin: ${Math.floor((Math.min(start.x, x) / w) * 1000)}, ymax: ${Math.floor((Math.max(start.y, y) / h) * 1000)}, xmax: ${Math.floor((Math.max(start.x, x) / w) * 1000)} }`);
+      const result = `box: { ymin: ${Math.floor((Math.min(start.y, y) / h) * 1000)}, xmin: ${Math.floor((Math.min(start.x, x) / w) * 1000)}, ymax: ${Math.floor((Math.max(start.y, y) / h) * 1000)}, xmax: ${Math.floor((Math.max(start.x, x) / w) * 1000)} }`;
+
+      // Use setTimeout to avoid blocking the UI release
+      setTimeout(() => {
+        window.prompt("Copy พิกัดนี้ไปใส่ใน Code:", result);
+      }, 50);
+
       devDragStart.current = null;
+      setDevCursorPos(null); // Clear cursor pos on release
       return;
     }
     if (toolMode === 'text' || !isDrawing.current) return;
@@ -310,13 +319,13 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
   };
 
   const handleHiddenObjectClick = (x: number, y: number) => {
-     if (!canvasRef.current) return;
-     const sx = (x / canvasRef.current.width) * 1000, sy = (y / canvasRef.current.height) * 1000;
-     hiddenObjects.forEach(obj => {
-       if (foundItemIds.has(obj.id) || !obj.box) return;
-       const { ymin, xmin, ymax, xmax } = obj.box;
-       if (sy >= ymin - 70 && sy <= ymax + 70 && sx >= xmin - 70 && sx <= xmax + 70) onObjectFound(obj.id);
-     });
+    if (!canvasRef.current) return;
+    const sx = (x / canvasRef.current.width) * 1000, sy = (y / canvasRef.current.height) * 1000;
+    hiddenObjects.forEach(obj => {
+      if (foundItemIds.has(obj.id) || !obj.box) return;
+      const { ymin, xmin, ymax, xmax } = obj.box;
+      if (sy >= ymin - 70 && sy <= ymax + 70 && sx >= xmin - 70 && sx <= xmax + 70) onObjectFound(obj.id);
+    });
   };
 
   const performFloodFill = (startX: number, startY: number) => {
@@ -332,9 +341,9 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
     const a = toolMode === 'eraser' ? 0 : 255;
     const stack = [[startX, startY]];
     const startIdx = (startY * width + startX) * 4;
-    const sR = data[startIdx], sG = data[startIdx+1], sB = data[startIdx+2], sA = data[startIdx+3];
+    const sR = data[startIdx], sG = data[startIdx + 1], sB = data[startIdx + 2], sA = data[startIdx + 3];
     if (sR === r && sG === g && sB === b && sA === a) return;
-    const canFill = (idx: number) => (lineArtData.data[idx] + lineArtData.data[idx+1] + lineArtData.data[idx+2]) > 450 && data[idx] === sR && data[idx+1] === sG && data[idx+2] === sB && data[idx+3] === sA;
+    const canFill = (idx: number) => (lineArtData.data[idx] + lineArtData.data[idx + 1] + lineArtData.data[idx + 2]) > 450 && data[idx] === sR && data[idx + 1] === sG && data[idx + 2] === sB && data[idx + 3] === sA;
     while (stack.length) {
       let [x, y] = stack.pop()!;
       let idx = (y * width + x) * 4;
@@ -342,7 +351,7 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
       y++; idx += width * 4;
       let rL = false, rR = false;
       while (y < height && canFill(idx)) {
-        data[idx] = r; data[idx+1] = g; data[idx+2] = b; data[idx+3] = a;
+        data[idx] = r; data[idx + 1] = g; data[idx + 2] = b; data[idx + 3] = a;
         if (x > 0) { if (canFill(idx - 4)) { if (!rL) { stack.push([x - 1, y]); rL = true; } } else rL = false; }
         if (x < width - 1) { if (canFill(idx + 4)) { if (!rR) { stack.push([x + 1, y]); rR = true; } } else rR = false; }
         y++; idx += width * 4;
@@ -352,29 +361,29 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
   };
 
   const handleTextPointerDown = (e: React.PointerEvent, id: number) => {
-     if (phase !== GamePhase.COLORING) return;
-     e.stopPropagation(); 
-     setSelectedTextId(id);
-     draggingTextId.current = id;
-     dragOffset.current = { x: e.clientX, y: e.clientY };
-     (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    if (phase !== GamePhase.COLORING) return;
+    e.stopPropagation();
+    setSelectedTextId(id);
+    draggingTextId.current = id;
+    dragOffset.current = { x: e.clientX, y: e.clientY };
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
   };
 
   const handleTextPointerMove = (e: React.PointerEvent) => {
-     if (draggingTextId.current !== null) {
-        e.stopPropagation();
-        const dx = (e.clientX - dragOffset.current.x) / zoom, dy = (e.clientY - dragOffset.current.y) / zoom;
-        setTextElements(prev => prev.map(t => t.id === draggingTextId.current ? { ...t, x: t.x + dx, y: t.y + dy } : t));
-        dragOffset.current = { x: e.clientX, y: e.clientY };
-     }
+    if (draggingTextId.current !== null) {
+      e.stopPropagation();
+      const dx = (e.clientX - dragOffset.current.x) / zoom, dy = (e.clientY - dragOffset.current.y) / zoom;
+      setTextElements(prev => prev.map(t => t.id === draggingTextId.current ? { ...t, x: t.x + dx, y: t.y + dy } : t));
+      dragOffset.current = { x: e.clientX, y: e.clientY };
+    }
   };
 
   const brushCursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M4 28 Q8 28 14 22 L26 8 L24 6 L12 18 Q6 24 4 28 Z" fill="${encodeURIComponent(brushColor)}" stroke="white" stroke-width="2"/></svg>') 0 32, crosshair`;
 
   return (
     <div className="relative w-full h-full bg-pink-50/50 shadow-inner rounded-xl overflow-hidden flex flex-col">
-      <div 
-        ref={containerRef} 
+      <div
+        ref={containerRef}
         tabIndex={0}
         onMouseEnter={() => containerRef.current?.focus()}
         className="flex-1 w-full h-full overflow-auto relative bg-gray-100/50 outline-none"
@@ -391,19 +400,34 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
                 onPointerUp={handlePointerUp}
               />
               {textElements.map(el => (
-                 <div key={el.id} onPointerDown={(e) => handleTextPointerDown(e, el.id)} onPointerMove={handleTextPointerMove} onPointerUp={() => draggingTextId.current = null}
-                    style={{ position: 'absolute', left: el.x * zoom, top: el.y * zoom, color: el.color, fontSize: `${el.fontSize * zoom}px`, fontWeight: 'bold', zIndex: 20, fontFamily: 'Kanit', touchAction: 'none', border: selectedTextId === el.id ? '2px dashed #f0f' : 'none' }}>
-                    {toolMode === 'text' ? <input value={el.text} onChange={(e) => setTextElements(prev => prev.map(t => t.id === el.id ? { ...t, text: e.target.value } : t))} style={{ background: 'rgba(255,255,255,0.5)', border: 'none', outline: 'none' }} /> : <span>{el.text || "พิมพ์ข้อความ"}</span>}
-                 </div>
+                <div key={el.id} onPointerDown={(e) => handleTextPointerDown(e, el.id)} onPointerMove={handleTextPointerMove} onPointerUp={() => draggingTextId.current = null}
+                  style={{ position: 'absolute', left: el.x * zoom, top: el.y * zoom, color: el.color, fontSize: `${el.fontSize * zoom}px`, fontWeight: 'bold', zIndex: 20, fontFamily: 'Kanit', touchAction: 'none', border: selectedTextId === el.id ? '2px dashed #f0f' : 'none' }}>
+                  {toolMode === 'text' ? <input value={el.text} onChange={(e) => setTextElements(prev => prev.map(t => t.id === el.id ? { ...t, text: e.target.value } : t))} style={{ background: 'rgba(255,255,255,0.5)', border: 'none', outline: 'none' }} /> : <span>{el.text || "พิมพ์ข้อความ"}</span>}
+                </div>
               ))}
               {hiddenObjects.map(obj => foundItemIds.has(obj.id) && obj.box && (
-                <div key={obj.id} style={{ position: 'absolute', left: `${(obj.box.xmin/10)}%`, top: `${(obj.box.ymin/10)}%`, width: `${((obj.box.xmax-obj.box.xmin)/10)}%`, height: `${((obj.box.ymax-obj.box.ymin)/10)}%`, border: '4px solid #0f0', pointerEvents: 'none', zIndex: 30 }} />
+                <div key={obj.id} style={{ position: 'absolute', left: `${(obj.box.xmin / 10)}%`, top: `${(obj.box.ymin / 10)}%`, width: `${((obj.box.xmax - obj.box.xmin) / 10)}%`, height: `${((obj.box.ymax - obj.box.ymin) / 10)}%`, border: '4px solid #0f0', pointerEvents: 'none', zIndex: 30 }} />
               ))}
+
+              {/* Dev Mode Selection Box */}
+              {isDevMode && devDragStart.current && devCursorPos && (
+                <div style={{
+                  position: 'absolute',
+                  left: `${Math.min(devDragStart.current.x, (devCursorPos.x / 1000) * (canvasRef.current?.width || 0)) / (canvasRef.current?.width || 1) * 100}%`,
+                  top: `${Math.min(devDragStart.current.y, (devCursorPos.y / 1000) * (canvasRef.current?.height || 0)) / (canvasRef.current?.height || 1) * 100}%`,
+                  width: `${Math.abs(devDragStart.current.x - (devCursorPos.x / 1000) * (canvasRef.current?.width || 0)) / (canvasRef.current?.width || 1) * 100}%`,
+                  height: `${Math.abs(devDragStart.current.y - (devCursorPos.y / 1000) * (canvasRef.current?.height || 0)) / (canvasRef.current?.height || 1) * 100}%`,
+                  border: '2px solid yellow',
+                  backgroundColor: 'rgba(255, 255, 0, 0.3)',
+                  zIndex: 100,
+                  pointerEvents: 'none'
+                }} />
+              )}
             </div>
           ) : (
             <div className="flex flex-col items-center gap-4 text-pink-300">
-               <div className="w-16 h-16 border-4 border-pink-200 border-t-pink-500 rounded-full animate-spin"></div>
-               <p className="font-bold">กำลังโหลดรูปภาพ...</p>
+              <div className="w-16 h-16 border-4 border-pink-200 border-t-pink-500 rounded-full animate-spin"></div>
+              <p className="font-bold">กำลังโหลดรูปภาพ...</p>
             </div>
           )}
         </div>
