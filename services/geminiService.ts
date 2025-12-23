@@ -93,10 +93,12 @@ export const generateFallbackLevel = async (index?: number): Promise<LevelData> 
     const blob = await response.blob();
     const base64 = await blobToBase64(blob);
 
+    const config = BACKUP_LEVEL_CONFIGS[targetIndex];
+
     return {
-      theme: `ด่านที่ ${targetIndex + 1}`,
-      story: "ภาพปริศนาจากคลังภาพของคุณเอง ลองระบายสีและเติมจินตนาการลงไปซิ!",
-      hiddenObjects: [],
+      theme: config ? config.theme : `ด่านที่ ${targetIndex + 1}`,
+      story: config ? config.story : "ภาพปริศนาจากคลังภาพของคุณเอง ลองระบายสีและเติมจินตนาการลงไปซิ!",
+      hiddenObjects: config ? config.hiddenObjects : [],
       imageMode: 'RASTER',
       rasterImage: base64,
       isLocal: true,
