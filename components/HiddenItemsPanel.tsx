@@ -6,7 +6,7 @@ interface HiddenItemsPanelProps {
   foundItemIds: Set<string>;
   story: string;
   phase: string;
-  rasterImage?: string; 
+  rasterImage?: string;
 }
 
 const HiddenItemsPanel: React.FC<HiddenItemsPanelProps> = ({ items, foundItemIds, story, phase, rasterImage }) => {
@@ -48,10 +48,18 @@ const ItemRow: React.FC<{ item: HiddenObject; isFound: boolean; phase: string; r
       const sx = Math.max(0, xmin - pad) / 1000 * img.width, sy = Math.max(0, ymin - pad) / 1000 * img.height;
       const sw = Math.min(1000, xmax + pad) / 1000 * img.width - sx, sh = Math.min(1000, ymax + pad) / 1000 * img.height - sy;
       canvas.width = 70; canvas.height = 70;
-      ctx.fillStyle = '#fff0f5'; ctx.fillRect(0,0,70,70);
+      ctx.fillStyle = '#fff0f5'; ctx.fillRect(0, 0, 70, 70);
       ctx.drawImage(img, sx, sy, sw, sh, 0, 0, 70, 70);
     };
-    img.src = `data:image/png;base64,${rasterImage}`;
+    // Use a more generic mime type or detect if key starts with /9j/ (JPEG) or iVBOR (PNG)
+    // But since we stripped the header in service, we just guess or try universal approach.
+    // For now, let's try assuming standard base64 without prefix if not present, and handle the prefix manually if needed.
+    // Actually, let's log what we have to debug.
+    console.log(`[ItemRow] Loading image for ${item.name}. Box:`, item.box, `Raster length: ${rasterImage.length}`);
+
+    // Simple heuristic: JPEGs often start with /9j/, PNGs with iVBOR.
+    const mime = rasterImage.trim().startsWith('iVBOR') ? 'image/png' : 'image/jpeg';
+    img.src = `data:${mime};base64,${rasterImage}`;
   }, [rasterImage, item.box]);
 
   return (

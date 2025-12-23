@@ -193,7 +193,8 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>(({
       console.error("Failed to load raster image in GameCanvas");
     };
 
-    img.src = `data:image/png;base64,${rasterImage}`;
+    const mime = rasterImage.trim().startsWith('iVBOR') ? 'image/png' : 'image/jpeg';
+    img.src = `data:${mime};base64,${rasterImage}`;
 
   }, [rasterImage]);
 
