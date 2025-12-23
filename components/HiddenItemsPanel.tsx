@@ -44,12 +44,44 @@ const ItemRow: React.FC<{ item: HiddenObject; isFound: boolean; phase: string; r
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
       const { ymin, xmin, ymax, xmax } = item.box!;
-      const pad = Math.max(xmax - xmin, ymax - ymin) * 0.3;
-      const sx = Math.max(0, xmin - pad) / 1000 * img.width, sy = Math.max(0, ymin - pad) / 1000 * img.height;
-      const sw = Math.min(1000, xmax + pad) / 1000 * img.width - sx, sh = Math.min(1000, ymax + pad) / 1000 * img.height - sy;
-      canvas.width = 70; canvas.height = 70;
-      ctx.fillStyle = '#fff0f5'; ctx.fillRect(0, 0, 70, 70);
-      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, 70, 70);
+      // Add slight padding to context
+      const pad = Math.max(xmax - xmin, ymax - ymin) * 0.15; // Reduced padding slightly for better focus
+
+      const sx = Math.max(0, xmin - pad) / 1000 * img.width;
+      const sy = Math.max(0, ymin - pad) / 1000 * img.height;
+      const sw = Math.min(1000, xmax + pad) / 1000 * img.width - sx;
+      const sh = Math.min(1000, ymax + pad) / 1000 * img.height - sy;
+
+      // High DPI Canvas
+      const CANVAS_SIZE = 140; // Double resolution
+      canvas.width = CANVAS_SIZE;
+      canvas.height = CANVAS_SIZE;
+
+      ctx.fillStyle = '#fff0f5';
+      ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+      // Calculate aspect ratio to "contain" the image
+      const srcRatio = sw / sh;
+      let dw, dh, dx, dy;
+
+      if (srcRatio > 1) {
+        // Wider than tall
+        dw = CANVAS_SIZE;
+        dh = CANVAS_SIZE / srcRatio;
+        dx = 0;
+        dy = (CANVAS_SIZE - dh) / 2;
+      } else {
+        // Taller than wide
+        dh = CANVAS_SIZE;
+        dw = CANVAS_SIZE * srcRatio;
+        dy = 0;
+        dx = (CANVAS_SIZE - dw) / 2;
+      }
+
+      // Draw with high quality
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     };
     // Use a more generic mime type or detect if key starts with /9j/ (JPEG) or iVBOR (PNG)
     // But since we stripped the header in service, we just guess or try universal approach.
