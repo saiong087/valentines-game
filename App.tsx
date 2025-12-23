@@ -38,7 +38,7 @@ const App: React.FC = () => {
 
   const gameCanvasRef = useRef<GameCanvasHandle>(null);
 
-  const startGame = async (useAI: boolean = true) => {
+  const startGame = async () => {
     setPhase(GamePhase.LOADING);
     setLevelData(null);
     setError(null);
@@ -46,15 +46,9 @@ const App: React.FC = () => {
     setZoom(1);
 
     try {
-      let data: LevelData;
-
-      if (useAI) {
-        data = await generateValentineLevel();
-      } else {
-        // สุ่มด่านจาก BACKUP_LEVELS
-        const randomIndex = Math.floor(Math.random() * BACKUP_LEVELS.length);
-        data = await generateFallbackLevel(randomIndex);
-      }
+      // สุ่มด่านจาก BACKUP_LEVELS เสมอ (ไม่ต้องใช้ AI)
+      const randomIndex = Math.floor(Math.random() * BACKUP_LEVELS.length);
+      const data = await generateFallbackLevel(randomIndex);
 
       setLevelData(data);
       setPhase(GamePhase.COLORING);
@@ -145,7 +139,7 @@ const App: React.FC = () => {
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                 {phase === GamePhase.WIN
                   ? "คุณมีสายตาที่เฉียบคมและฝีมือระบายสีที่ยอดเยี่ยมมาก! มาลองเล่นด่านต่อไปกันเลย"
-                  : "สร้างสรรค์ภาพวาเลนไทน์ด้วย AI หรือจะใช้ภาพที่คุณอัปโหลดมาเองก็ได้นะ!"}
+                  : "มาสนุกกับการระบายสีและค้นหาของที่ซ่อนอยู่ในภาพกันเถอะ!"}
               </p>
 
               {phase === GamePhase.WIN && (
@@ -167,24 +161,15 @@ const App: React.FC = () => {
 
               <div className="flex flex-col gap-3">
                 <button
-                  onClick={() => startGame(true)}
+                  onClick={startGame}
                   disabled={phase === GamePhase.LOADING}
                   className={`w-full py-4 text-xl font-bold text-white rounded-2xl shadow-[0_6px_0_rgb(0,0,0,0.2)] transition-all transform active:translate-y-1 active:shadow-none ${phase === GamePhase.LOADING
                     ? 'bg-gray-400 cursor-wait'
                     : 'bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700'
                     }`}
                 >
-                  {phase === GamePhase.LOADING ? "กำลังดาวน์โหลดด่าน..." : phase === GamePhase.WIN ? "เล่นต่อด่าน AI 🔄" : "เริ่มด้วยภาพจาก AI ✨"}
+                  {phase === GamePhase.LOADING ? "กำลังดาวน์โหลดด่าน..." : phase === GamePhase.WIN ? "เล่นอีกครั้ง 🔄" : "เริ่มเกม 🎮"}
                 </button>
-
-                {phase !== GamePhase.LOADING && (
-                  <button
-                    onClick={() => startGame(false)}
-                    className="w-full py-3 text-lg font-bold text-pink-600 bg-pink-100 border-2 border-pink-300 rounded-2xl shadow-[0_4px_0_rgb(200,100,150,0.3)] hover:bg-pink-200 transition-all transform active:translate-y-1 active:shadow-none"
-                  >
-                    📂 เล่นด่านคุณ (สุ่มจากภาพที่อัปโหลด)
-                  </button>
-                )}
               </div>
             </div>
           </div>
