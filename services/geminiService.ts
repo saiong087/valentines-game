@@ -21,37 +21,37 @@ const BACKUP_LEVEL_CONFIGS: { [key: number]: BackupConfig } = {
   0: { // backup1.jpg
     base64: "", theme: "ด่านที่ 1: สวนแห่งความลับ", story: "ในสวนแห่งนี้มีของวิเศษซ่อนอยู่ 4 อย่าง ลองหาดูสิ",
     hiddenObjects: [
-      { id: 'b1_1', name: 'ดอกกุหลาบ', hint: 'ราชินีแห่งดอกไม้', box: { ymin: 466, xmin: 475, ymax: 472, xmax: 497 } },
-      { id: 'b1_2', name: 'ช็อกโกแลต', hint: 'ของหวานยอดนิยม', box: { ymin: 742, xmin: 756, ymax: 744, xmax: 757 } },
-      { id: 'b1_3', name: 'การ์ด', hint: 'ส่งความในใจ', box: { ymin: 783, xmin: 129, ymax: 790, xmax: 132 } },
-      { id: 'b1_4', name: 'ตุ๊กตาหมี', hint: 'เพื่อนขนนุ่ม', box: { ymin: 325, xmin: 68, ymax: 520, xmax: 128 } },
+      { id: 'b1_1', name: 'ดอกกุหลาบ', hint: 'ราชินีแห่งดอกไม้', box: { ymin: 416, xmin: 425, ymax: 522, xmax: 547 } }, // Center ~ 469, 486
+      { id: 'b1_2', name: 'ช็อกโกแลต', hint: 'ของหวานยอดนิยม', box: { ymin: 692, xmin: 706, ymax: 794, xmax: 807 } }, // Center ~ 743, 756
+      { id: 'b1_3', name: 'การ์ด', hint: 'ส่งความในใจ', box: { ymin: 736, xmin: 80, ymax: 840, xmax: 182 } }, // Center ~ 786, 130
+      { id: 'b1_4', name: 'ตุ๊กตาหมี', hint: 'เพื่อนขนนุ่ม', box: { ymin: 325, xmin: 68, ymax: 520, xmax: 168 } }, // Already somewhat large, expanded xmax slightly
     ]
   },
   1: { // backup2.jpg
     base64: "", theme: "ด่านที่ 2: ห้องนั่งเล่นแสนสุข", story: "มีของเล่นหายไป 4 ชิ้น ช่วยตามหาหน่อยนะ",
     hiddenObjects: [
-      { id: 'b2_1', name: 'นก', hint: 'สัตว์ปีกตัวน้อย', box: { ymin: 277, xmin: 191, ymax: 279, xmax: 191 } },
-      { id: 'b2_2', name: 'กางเขน', hint: 'สัญลักษณ์รูปกากบาท', box: { ymin: 447, xmin: 710, ymax: 448, xmax: 737 } },
-      { id: 'b2_3', name: 'กระโปรง', hint: 'เครื่องแต่งกาย', box: { ymin: 604, xmin: 359, ymax: 613, xmax: 369 } },
-      { id: 'b2_4', name: 'ผู้ชาย', hint: 'บุคคลในภาพ', box: { ymin: 339, xmin: 188, ymax: 349, xmax: 192 } },
+      { id: 'b2_1', name: 'นก', hint: 'สัตว์ปีกตัวน้อย', box: { ymin: 228, xmin: 141, ymax: 328, xmax: 241 } }, // Center ~ 278, 191
+      { id: 'b2_2', name: 'กางเขน', hint: 'สัญลักษณ์รูปกากบาท', box: { ymin: 397, xmin: 673, ymax: 498, xmax: 773 } }, // Center ~ 447, 723
+      { id: 'b2_3', name: 'กระโปรง', hint: 'เครื่องแต่งกาย', box: { ymin: 558, xmin: 314, ymax: 659, xmax: 414 } }, // Center ~ 608, 364
+      { id: 'b2_4', name: 'ผู้ชาย', hint: 'บุคคลในภาพ', box: { ymin: 294, xmin: 140, ymax: 394, xmax: 240 } }, // Center ~ 344, 190
     ]
   },
   2: { // backup3.jpg
     base64: "", theme: "ด่านที่ 3: ปาร์ตี้วันเกิด", story: "ขนมและของขวัญกระจายไปทั่วงาน ช่วยเก็บหน่อย",
     hiddenObjects: [
-      { id: 'b3_1', name: 'พระจันทร์', hint: 'ส่องสว่างบนฟ้า', box: { ymin: 181, xmin: 494, ymax: 184, xmax: 611 } },
-      { id: 'b3_2', name: 'คิวปิด', hint: 'กามเทพตัวน้อย', box: { ymin: 358, xmin: 451, ymax: 358, xmax: 467 } },
-      { id: 'b3_3', name: 'ต้นไม้', hint: 'ให้ร่มเงา', box: { ymin: 529, xmin: 929, ymax: 563, xmax: 931 } },
-      { id: 'b3_4', name: 'ลูกศร', hint: 'อาวุธของกามเทพ', box: { ymin: 300, xmin: 192, ymax: 308, xmax: 204 } },
+      { id: 'b3_1', name: 'พระจันทร์', hint: 'ส่องสว่างบนฟ้า', box: { ymin: 132, xmin: 502, ymax: 233, xmax: 603 } }, // Center ~ 182, 552
+      { id: 'b3_2', name: 'คิวปิด', hint: 'กามเทพตัวน้อย', box: { ymin: 308, xmin: 409, ymax: 408, xmax: 509 } }, // Center ~ 358, 459
+      { id: 'b3_3', name: 'ต้นไม้', hint: 'ให้ร่มเงา', box: { ymin: 496, xmin: 880, ymax: 596, xmax: 980 } }, // Center ~ 546, 930
+      { id: 'b3_4', name: 'ลูกศร', hint: 'อาวุธของกามเทพ', box: { ymin: 254, xmin: 148, ymax: 354, xmax: 248 } }, // Center ~ 304, 198
     ]
   },
   3: { // backup4.jpg
     base64: "", theme: "ด่านที่ 4: ชายหาดหรรษา", story: "ของเล่นชายหาดหายไปไหนหมดนะ?",
     hiddenObjects: [
-      { id: 'b4_1', name: 'สุนัข', hint: 'เพื่อนซี้สี่ขา', box: { ymin: 459, xmin: 472, ymax: 462, xmax: 493 } },
-      { id: 'b4_2', name: 'นาฬิกา', hint: 'บอกเวลา', box: { ymin: 102, xmin: 449, ymax: 103, xmax: 467 } },
-      { id: 'b4_3', name: 'ของขวัญ', hint: 'กล่องปริศนา', box: { ymin: 658, xmin: 639, ymax: 663, xmax: 652 } },
-      { id: 'b4_4', name: 'เครื่องเขียน', hint: 'อุปกรณ์การเรียน', box: { ymin: 328, xmin: 49, ymax: 329, xmax: 58 } },
+      { id: 'b4_1', name: 'สุนัข', hint: 'เพื่อนซี้สี่ขา', box: { ymin: 410, xmin: 432, ymax: 511, xmax: 533 } }, // Center ~ 460, 482
+      { id: 'b4_2', name: 'นาฬิกา', hint: 'บอกเวลา', box: { ymin: 52, xmin: 408, ymax: 153, xmax: 508 } }, // Center ~ 102, 458
+      { id: 'b4_3', name: 'ของขวัญ', hint: 'กล่องปริศนา', box: { ymin: 610, xmin: 595, ymax: 711, xmax: 696 } }, // Center ~ 660, 645
+      { id: 'b4_4', name: 'เครื่องเขียน', hint: 'อุปกรณ์การเรียน', box: { ymin: 278, xmin: 4, ymax: 379, xmax: 104 } }, // Center ~ 328, 53
     ]
   }
 };
